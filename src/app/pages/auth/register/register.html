@@ -1,0 +1,28 @@
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <h2 style="margin-bottom: 2rem; color: #333; font-weight: 600;">El registro</h2>
+
+        <div style="margin-bottom: 1rem;">
+            <input pInputText type="text" placeholder="Nombre completo" [style]="{ 'width': '100%' }" />
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+            <input pInputText type="text" placeholder="Correo electrónico" [style]="{ 'width': '100%' }" />
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+            <input pInputText type="password" placeholder="Contraseña" [style]="{ 'width': '100%' }" />
+        </div>
+
+        <p-button label="Registrarse" severity="success" [style]="{ 'width': '100%', 'margin-bottom': '1rem' }">
+        </p-button>
+
+        <p-button label="Regresar" severity="secondary" [text]="true" routerLink="/" [style]="{ 'width': '100%' }">
+        </p-button>
+
+        <p style="margin-top: 1.5rem; color: #666; font-size: 0.9rem;">
+            ¿Ya tienes cuenta? <a routerLink="/login"
+                style="color: #007bff; text-decoration: none; font-weight: 500;">Inicia sesión</a>
+        </p>
+    </div>
+</div>

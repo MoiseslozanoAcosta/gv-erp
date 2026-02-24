@@ -1,14 +1,18 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { ButtonModule } from 'primeng/button'; // 1. Importamos el módulo
+import { Component } from '@angular/core';
+import { RouterOutlet, RouterLink } from '@angular/router'; 
+import { ButtonModule } from 'primeng/button'; 
 
 @Component({
   selector: 'app-root',
-  standalone: true, // Asegúrate de que tenga esto
-  imports: [RouterOutlet, ButtonModule], // 2. Agregamos ButtonModule aquí
-  templateUrl: './app.html',
+  standalone: true,
+  imports: [
+    RouterOutlet, 
+    RouterLink,    
+    ButtonModule   
+  ],
+  templateUrl: './app.html', // Asegúrate que el archivo se llame app.html
   styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('gv-erp');
+export class AppComponent {
+  title = 'gv-erp';
 }

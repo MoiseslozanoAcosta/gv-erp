@@ -1,0 +1,26 @@
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <h2 style="margin-bottom: 2rem; color: #333; font-weight: 600;">Iniciar Sesión</h2>
+
+        <div style="margin-bottom: 1.5rem; text-align: left;">
+            <input pInputText type="text" placeholder="Correo electrónico"
+                [style]="{ 'width': '100%', 'padding': '0.75rem' }" />
+        </div>
+
+        <div style="margin-bottom: 2rem; text-align: left;">
+            <input pInputText type="password" placeholder="Contraseña"
+                [style]="{ 'width': '100%', 'padding': '0.75rem' }" />
+        </div>
+
+        <div style="display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1.5rem;">
+            <p-button label="Entrar" severity="success" icon="pi pi-sign-in" routerLink="/"
+                [style]="{ 'width': '100%' }"></p-button>
+            <p-button label="Regresar" severity="secondary" [text]="true" routerLink="/"></p-button>
+        </div>
+
+        <p style="color: #666; font-size: 0.9rem;">
+            ¿No tienes cuenta? <a routerLink="/register"
+                style="color: #007bff; text-decoration: none; font-weight: 500;">Regístrate</a>
+        </p>
+    </div>
+</div>

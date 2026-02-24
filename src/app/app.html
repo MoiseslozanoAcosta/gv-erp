@@ -1,8 +1,11 @@
-<div style="padding: 2rem; display: flex; gap: 1rem;">
-  <h1>ERP</h1>
-  <p-button label="Guardar" severity="success" icon="pi pi-check"></p-button>
+<nav style="padding: 1rem; background: #ffffff; border-bottom: 2px solid #007bff; display: flex; gap: 1rem; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+  <h1 style="margin: 0; color: #007bff; font-size: 1.5rem;">GV-ERP</h1>
+  
+  <p-button label="Landing" routerLink="/" severity="secondary" [text]="true" icon="pi pi-home"></p-button>
+  <p-button label="Inicio" routerLink="/login" severity="primary" icon="pi pi-user"></p-button>
+  <p-button label="Registro" routerLink="/register" severity="success" icon="pi pi-user-plus"></p-button>
+</nav>
 
-  <p-button label="Principal" severity="primary" icon="pi pi-star"></p-button>
+<div style="padding: 1rem;">
+  <router-outlet />
 </div>
-
-<router-outlet />
