@@ -1,28 +1,78 @@
+<p-toast></p-toast>
+
 <div class="auth-wrapper">
-    <div class="auth-card">
-        <h2 style="margin-bottom: 2rem; color: #333; font-weight: 600;">El registro</h2>
+    <div class="auth-card" style="max-width: 500px;">
+        <h2 style="margin-bottom: 1.5rem; color: #333; font-weight: 600;">Crear Cuenta</h2>
 
-        <div style="margin-bottom: 1rem;">
-            <input pInputText type="text" placeholder="Nombre completo" [style]="{ 'width': '100%' }" />
-        </div>
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; text-align: left;">
 
-        <div style="margin-bottom: 1rem;">
-            <input pInputText type="text" placeholder="Correo electrónico" [style]="{ 'width': '100%' }" />
-        </div>
+                <div>
+                    <label>Usuario</label>
+                    <input pInputText formControlName="usuario" style="width: 100%" placeholder="Nombre de usuario" />
+                </div>
 
-        <div style="margin-bottom: 1.5rem;">
-            <input pInputText type="password" placeholder="Contraseña" [style]="{ 'width': '100%' }" />
-        </div>
+                <div>
+                    <label>Email</label>
+                    <input pInputText formControlName="email" style="width: 100%" placeholder="ejemplo@correo.com" />
+                    <small class="p-error" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.dirty">
+                        Correo no válido.
+                    </small>
+                </div>
 
-        <p-button label="Registrarse" severity="success" [style]="{ 'width': '100%', 'margin-bottom': '1rem' }">
-        </p-button>
+                <div style="grid-column: span 2;">
+                    <label>Nombre Completo</label>
+                    <input pInputText formControlName="nombreCompleto" style="width: 100%" />
+                </div>
 
-        <p-button label="Regresar" severity="secondary" [text]="true" routerLink="/" [style]="{ 'width': '100%' }">
-        </p-button>
+                <div style="grid-column: span 2;">
+                    <label>Dirección</label>
+                    <input pInputText formControlName="direccion" style="width: 100%" />
+                </div>
 
-        <p style="margin-top: 1.5rem; color: #666; font-size: 0.9rem;">
-            ¿Ya tienes cuenta? <a routerLink="/login"
-                style="color: #007bff; text-decoration: none; font-weight: 500;">Inicia sesión</a>
-        </p>
+                <div>
+                    <label>Teléfono (Solo números)</label>
+                    <input pInputText formControlName="telefono" style="width: 100%" placeholder="10 dígitos" />
+                    <small class="p-error" *ngIf="registerForm.get('telefono')?.errors?.['pattern'] && registerForm.get('telefono')?.dirty">
+                        ¡Solo se permiten números!
+                    </small>
+                </div>
+
+                <div>
+                    <label>Fecha Nacimiento</label>
+                    <input pInputText type="date" formControlName="fechaNacimiento" style="width: 100%" />
+                    <small class="p-error" *ngIf="registerForm.get('fechaNacimiento')?.errors?.['menorEdad'] && registerForm.get('fechaNacimiento')?.dirty">
+                        Debes ser mayor de edad.
+                    </small>
+                </div>
+
+                <div>
+                    <label>Contraseña</label>
+                    <input pInputText type="password" formControlName="password" style="width: 100%" placeholder="Min. 10 caracteres" />
+                    <small class="p-error" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.dirty">
+                        Min. 10 car. y un símbolo (#$%&@).
+                    </small>
+                </div>
+
+                <div>
+                    <label>Confirmar Contraseña</label>
+                    <input pInputText type="password" formControlName="confirmPassword" style="width: 100%" />
+                    <small class="p-error" *ngIf="registerForm.hasError('noCoincide') && registerForm.get('confirmPassword')?.dirty">
+                        Las contraseñas no coinciden.
+                    </small>
+                </div>
+
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <p-button type="submit" label="Registrarse" severity="success" [disabled]="registerForm.invalid"
+                    [style]="{ 'width': '100%' }">
+                </p-button>
+
+                <p-button label="Regresar al inicio" severity="secondary" [text]="true" routerLink="/"
+                    [style]="{ 'width': '100%', 'margin-top': '0.5rem' }">
+                </p-button>
+            </div>
+        </form>
     </div>
 </div>
