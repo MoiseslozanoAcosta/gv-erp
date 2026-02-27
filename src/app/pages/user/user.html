@@ -1,0 +1,48 @@
+<div class="p-4">
+    <p-card header="Perfil de Usuario" subheader="Información de la cuenta" [style]="{width: '100%', 'max-width': '800px'}">
+        <div class="grid mt-2">
+            
+            <div class="col-12 md:col-6 mb-3">
+                <label class="block font-bold mb-1"><i class="pi pi-user mr-2 text-primary"></i>Usuario</label>
+                <div class="text-900">{{userData.usuario}}</div>
+            </div>
+            <div class="col-12 md:col-6 mb-3">
+                <label class="block font-bold mb-1"><i class="pi pi-envelope mr-2 text-primary"></i>Email</label>
+                <div class="text-900">{{userData.email}}</div>
+            </div>
+
+            <div class="col-12 md:col-6 mb-3">
+                <label class="block font-bold mb-1"><i class="pi pi-id-card mr-2 text-primary"></i>Nombre Completo</label>
+                <div class="text-900">{{userData.nombreCompleto}}</div>
+            </div>
+            <div class="col-12 md:col-6 mb-3">
+                <label class="block font-bold mb-1"><i class="pi pi-map-marker mr-2 text-primary"></i>Dirección</label>
+                <div class="text-900">{{userData.direccion}}</div>
+            </div>
+
+            <div class="col-12 md:col-6 mb-3">
+                <label class="block font-bold mb-1"><i class="pi pi-phone mr-2 text-primary"></i>Teléfono</label>
+                <div class="text-900">{{userData.telefono}}</div>
+            </div>
+            <div class="col-12 md:col-6 mb-3">
+                <label class="block font-bold mb-1"><i class="pi pi-calendar mr-2 text-primary"></i>Fecha de Nacimiento</label>
+                <div class="text-900">{{userData.fechaNacimiento}}</div>
+            </div>
+
+            <div class="col-12 mt-3 pt-3 border-top-1 surface-border">
+                <label class="block font-bold mb-1"><i class="pi pi-lock mr-2 text-primary"></i>Contraseña</label>
+                <div class="flex align-items-center">
+                    <span class="text-900">********</span>
+                    <small class="text-500 ml-3">(Protegida por seguridad)</small>
+                </div>
+            </div>
+        </div>
+
+        <ng-template pTemplate="footer">
+            <div class="flex justify-content-end gap-3 mt-4">
+                <p-button label="Cambiar Contraseña" icon="pi pi-key" [text]="true" severity="secondary"></p-button>
+                <p-button label="Editar Datos" icon="pi pi-user-edit" severity="success"></p-button>
+            </div>
+        </ng-template>
+    </p-card>
+</div>

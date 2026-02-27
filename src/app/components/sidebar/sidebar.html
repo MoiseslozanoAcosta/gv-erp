@@ -2,12 +2,19 @@
   <div class="logo">
     <h2>GV-ERP</h2>
   </div>
+  
   <nav>
     <a routerLink="/home" routerLinkActive="active"><i class="pi pi-home"></i> Dashboard</a>
-    <a routerLink="/usuarios"><i class="pi pi-users"></i> Usuarios</a>
-    <a routerLink="/config"><i class="pi pi-cog"></i> Configuración</a>
+    <a routerLink="/group" routerLinkActive="active"><i class="pi pi-users"></i> Grupo</a>
+    <a routerLink="/user" routerLinkActive="active"><i class="pi pi-user"></i> Mi Perfil</a>
   </nav>
-  <div class="logout">
-    <a routerLink="/login"><i class="pi pi-sign-out"></i> Salir</a>
+
+  <div class="sidebar-footer">
+    <div class="logout">
+      <a routerLink="/login"><i class="pi pi-sign-out"></i> Salir</a>
+    </div>
+      <div class="version-app">
+      <small>v. 1.0.0</small>
+    </div>
   </div>
 </div>

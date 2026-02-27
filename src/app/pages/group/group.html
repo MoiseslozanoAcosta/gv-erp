@@ -1,0 +1,25 @@
+<div class="p-4">
+    <h1 class="mb-4">Información del Grupo</h1>
+    
+    <div class="grid flex gap-4">
+        <p-card header="Total Miembros" [style]="{width: '250px'}" class="text-center">
+            <span style="font-size: 3rem; font-weight: bold; color: #3b82f6;">
+                {{groupInfo.totalMiembros}}
+            </span>
+        </p-card>
+
+        <p-card header="Avances del Proyecto" [style]="{width: '250px'}" class="text-center">
+            <p-tag severity="success" [value]="groupInfo.avances" [style]="{fontSize: '1.5rem', padding: '1rem'}"></p-tag>
+        </p-card>
+    </div>
+
+    <div class="mt-4">
+        <p-card header="Integrantes">
+            <ul class="list-none p-0">
+                <li *ngFor="let m of groupInfo.miembros" class="p-3 border-bottom-1 surface-border">
+                    <i class="pi pi-user mr-2"></i> <strong>{{m.nombre}}</strong> - {{m.rol}}
+                </li>
+            </ul>
+        </p-card>
+    </div>
+</div>
