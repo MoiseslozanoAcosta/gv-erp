@@ -15,7 +15,8 @@
                 <div>
                     <label>Email</label>
                     <input pInputText formControlName="email" style="width: 100%" placeholder="ejemplo@correo.com" />
-                    <small class="p-error" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.dirty">
+                    <small class="p-error"
+                        *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.dirty">
                         Correo no válido.
                     </small>
                 </div>
@@ -31,25 +32,29 @@
                 </div>
 
                 <div>
-                    <label>Teléfono (Solo números)</label>
-                    <input pInputText formControlName="telefono" style="width: 100%" placeholder="10 dígitos" />
-                    <small class="p-error" *ngIf="registerForm.get('telefono')?.errors?.['pattern'] && registerForm.get('telefono')?.dirty">
-                        ¡Solo se permiten números!
+                    <label>Teléfono (10 números)</label>
+                    <input pInputText formControlName="telefono" style="width: 100%" placeholder="Ej. 4421234567"
+                        maxlength="10" /> <small class="p-error"
+                        *ngIf="registerForm.get('telefono')?.errors?.['pattern'] && registerForm.get('telefono')?.dirty">
+                        ¡Deben ser exactamente 10 números!
                     </small>
                 </div>
 
                 <div>
                     <label>Fecha Nacimiento</label>
                     <input pInputText type="date" formControlName="fechaNacimiento" style="width: 100%" />
-                    <small class="p-error" *ngIf="registerForm.get('fechaNacimiento')?.errors?.['menorEdad'] && registerForm.get('fechaNacimiento')?.dirty">
+                    <small class="p-error"
+                        *ngIf="registerForm.get('fechaNacimiento')?.errors?.['menorEdad'] && registerForm.get('fechaNacimiento')?.dirty">
                         Debes ser mayor de edad.
                     </small>
                 </div>
 
                 <div>
                     <label>Contraseña</label>
-                    <input pInputText type="password" formControlName="password" style="width: 100%" placeholder="Min. 10 caracteres" />
-                    <small class="p-error" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.dirty">
+                    <input pInputText type="password" formControlName="password" style="width: 100%"
+                        placeholder="Min. 10 caracteres" />
+                    <small class="p-error"
+                        *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.dirty">
                         Min. 10 car. y un símbolo (#$%&@).
                     </small>
                 </div>
@@ -57,7 +62,8 @@
                 <div>
                     <label>Confirmar Contraseña</label>
                     <input pInputText type="password" formControlName="confirmPassword" style="width: 100%" />
-                    <small class="p-error" *ngIf="registerForm.hasError('noCoincide') && registerForm.get('confirmPassword')?.dirty">
+                    <small class="p-error"
+                        *ngIf="registerForm.hasError('noCoincide') && registerForm.get('confirmPassword')?.dirty">
                         Las contraseñas no coinciden.
                     </small>
                 </div>
