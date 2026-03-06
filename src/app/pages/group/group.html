@@ -1,25 +1,67 @@
+<p-toast></p-toast>
+
 <div class="p-4">
-    <h1 class="mb-4">Información del Grupo</h1>
-    
-    <div class="grid flex gap-4">
-        <p-card header="Total Miembros" [style]="{width: '250px'}" class="text-center">
-            <span style="font-size: 3rem; font-weight: bold; color: #3b82f6;">
-                {{groupInfo.totalMiembros}}
-            </span>
-        </p-card>
+    <p-card header="Gestión de Grupos (CRUD)" subheader="Panel de control de proyectos">
+        
+        <div class="mb-3">
+            <p-button label="Nuevo Grupo" icon="pi pi-plus" (onClick)="openNew()"></p-button>
+        </div>
 
-        <p-card header="Avances del Proyecto" [style]="{width: '250px'}" class="text-center">
-            <p-tag severity="success" [value]="groupInfo.avances" [style]="{fontSize: '1.5rem', padding: '1rem'}"></p-tag>
-        </p-card>
-    </div>
-
-    <div class="mt-4">
-        <p-card header="Integrantes">
-            <ul class="list-none p-0">
-                <li *ngFor="let m of groupInfo.miembros" class="p-3 border-bottom-1 surface-border">
-                    <i class="pi pi-user mr-2"></i> <strong>{{m.nombre}}</strong> - {{m.rol}}
-                </li>
-            </ul>
-        </p-card>
-    </div>
+        <p-table [value]="groups" [responsiveLayout]="'scroll'">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nivel</th>
+                    <th>Autor</th>
+                    <th>Nombre</th>
+                    <th>Integrantes</th>
+                    <th>Tickets</th>
+                    <th>Acciones</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-g>
+                <tr>
+                    <td>{{g.nivel}}</td>
+                    <td>{{g.autor}}</td>
+                    <td>{{g.nombre}}</td>
+                    <td>{{g.integrantes}}</td>
+                    <td>{{g.tickets}}</td>
+                    <td>
+                        <p-button icon="pi pi-pencil" class="mr-2" severity="warn" [text]="true" (onClick)="editGroup(g)"></p-button>
+                        <p-button icon="pi pi-trash" severity="danger" [text]="true" (onClick)="deleteGroup(g.id)"></p-button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-card>
 </div>
+
+<p-dialog [(visible)]="displayDialog" [header]="isNew ? 'Nuevo Grupo' : 'Editar Grupo'" [modal]="true" [style]="{width: '450px'}">
+    <div class="flex flex-column gap-3">
+        <div>
+            <label class="block font-bold mb-1">Nombre del Grupo</label>
+            <input pInputText [(ngModel)]="group.nombre" class="w-full" />
+        </div>
+        <div>
+            <label class="block font-bold mb-1">Autor</label>
+            <input pInputText [(ngModel)]="group.autor" class="w-full" />
+        </div>
+        <div class="grid">
+            <div class="col-6">
+                <label class="block font-bold mb-1">Nivel</label>
+                <input pInputText [(ngModel)]="group.nivel" class="w-full" />
+            </div>
+            <div class="col-6">
+                <label class="block font-bold mb-1">Tickets</label>
+                <input pInputText [(ngModel)]="group.tickets" class="w-full" type="number" />
+            </div>
+        </div>
+        <div>
+            <label class="block font-bold mb-1">Descripción</label>
+            <input pInputText [(ngModel)]="group.descripcion" class="w-full" />
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button label="Cancelar" icon="pi pi-times" [text]="true" (onClick)="displayDialog = false"></p-button>
+        <p-button label="Guardar" icon="pi pi-check" (onClick)="saveGroup()"></p-button>
+    </ng-template>
+</p-dialog>
