@@ -122,7 +122,7 @@ export class AuthService {
         direccion: 'Guadalajara', 
         telefono: '3331234567', 
         fechaNacimiento: '1993-07-10', 
-        permissions: ['ticket:add', 'ticket:edit', 'ticket:view'], 
+        permissions: [ 'ticket:edit', 'ticket:view'], 
         groupIds: [2, 3] }
     ];
 
