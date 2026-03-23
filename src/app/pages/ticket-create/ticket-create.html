@@ -1,0 +1,57 @@
+<p-toast></p-toast>
+<div class="create-page">
+    <div class="create-header">
+        <h1><i class="pi pi-plus-circle"></i> Crear Ticket</h1>
+        <p>Completa los campos para crear un nuevo ticket</p>
+    </div>
+
+    <div class="create-card">
+        <form [formGroup]="form">
+            <div class="field">
+                <label>Título <span class="required">*</span></label>
+                <input pInputText formControlName="title" placeholder="Describe el problema o tarea..." />
+                <small class="error" *ngIf="form.get('title')?.invalid && form.get('title')?.dirty">
+                    El título es obligatorio (mínimo 3 caracteres)
+                </small>
+            </div>
+
+            <div class="field">
+                <label>Descripción</label>
+                <textarea pTextarea formControlName="description" rows="4"
+                    placeholder="Detalla el contexto, pasos para reproducir, criterios de aceptación..."></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="field">
+                    <label>Estado inicial</label>
+                    <p-select formControlName="status" [options]="statusOptions" optionLabel="label" optionValue="value"
+                        styleClass="w-full"></p-select>
+                </div>
+                <div class="field">
+                    <label>Prioridad</label>
+                    <p-select formControlName="priority" [options]="priorityOptions" optionLabel="label"
+                        optionValue="value" styleClass="w-full"></p-select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="field">
+                    <label>Asignar a</label>
+                    <p-select formControlName="assignedTo" [options]="groupMembers()" optionLabel="label"
+                        optionValue="value" placeholder="Sin asignar" [showClear]="true" styleClass="w-full"></p-select>
+                </div>
+                <div class="field">
+                    <label>Fecha límite</label>
+                    <input pInputText type="date" formControlName="dueDate" />
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <p-button label="Cancelar" severity="secondary" [text]="true" icon="pi pi-times"
+                    (onClick)="onCancel()"></p-button>
+                <p-button label="Crear Ticket" icon="pi pi-check" [disabled]="form.invalid"
+                    (onClick)="onCreate()"></p-button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,154 @@
+<p-toast></p-toast>
+
+<div class="detail-page" *ngIf="ticket()">
+    <!-- Header -->
+    <div class="detail-header">
+        <div class="header-left">
+            <a routerLink="/tickets" class="back-btn">← Volver</a>
+            <div>
+                <span class="ticket-id-badge">#{{ ticket()!.id }}</span>
+                <h1>{{ ticket()!.title }}</h1>
+            </div>
+        </div>
+        <div class="header-actions" *ngIf="canEdit()">
+            <button *ngIf="!editMode()" class="action-btn edit-btn" (click)="toggleEdit()">✏️ Editar</button>
+            <button *ngIf="editMode()" class="action-btn save-btn" (click)="onSave()">✓ Guardar</button>
+            <button *ngIf="editMode()" class="action-btn cancel-btn" (click)="toggleEdit()">✕ Cancelar</button>
+            <button *ngIf="canFullEdit()" class="action-btn danger-btn" (click)="onDelete()">🗑️ Eliminar</button>
+        </div>
+    </div>
+
+    <div class="detail-grid">
+        <!-- Main content -->
+        <div class="detail-main">
+            <!-- Edit form or view mode -->
+            <div class="detail-card" *ngIf="editMode()">
+                <h3>Editar Ticket</h3>
+                <form [formGroup]="editForm">
+                    <div class="field" *ngIf="canFullEdit()">
+                        <label>Título</label>
+                        <input pInputText formControlName="title" />
+                    </div>
+                    <div class="field" *ngIf="canFullEdit()">
+                        <label>Descripción</label>
+                        <textarea pTextarea formControlName="description" rows="4"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="field">
+                            <label>Estado</label>
+                            <p-select formControlName="status" [options]="statusOptions" optionLabel="label"
+                                optionValue="value" styleClass="w-full"></p-select>
+                        </div>
+                        <div class="field" *ngIf="canFullEdit()">
+                            <label>Prioridad (中文)</label>
+                            <p-select formControlName="priority" [options]="priorityOptions" optionLabel="label"
+                                optionValue="value" styleClass="w-full"></p-select>
+                        </div>
+                    </div>
+                    <div class="form-row" *ngIf="canFullEdit()">
+                        <div class="field">
+                            <label>Asignado a</label>
+                            <p-select formControlName="assignedTo" [options]="groupMembers()" optionLabel="label"
+                                optionValue="value" placeholder="Sin asignar" [showClear]="true"
+                                styleClass="w-full"></p-select>
+                        </div>
+                        <div class="field">
+                            <label>Fecha límite</label>
+                            <input pInputText type="date" formControlName="dueDate" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- View mode description -->
+            <div class="detail-card" *ngIf="!editMode()">
+                <h3>Descripción</h3>
+                <p class="description-text">{{ ticket()!.description || 'Sin descripción.' }}</p>
+            </div>
+
+            <!-- Comments -->
+            <div class="detail-card">
+                <h3>💬 Comentarios ({{ ticket()!.comments.length }})</h3>
+                <div class="comments-list">
+                    <div *ngFor="let comment of ticket()!.comments" class="comment-item">
+                        <div class="comment-avatar">{{ comment.userName[0] }}</div>
+                        <div class="comment-body">
+                            <div class="comment-meta">
+                                <strong>{{ comment.userName }}</strong>
+                                <span>{{ comment.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+                            </div>
+                            <p>{{ comment.text }}</p>
+                        </div>
+                    </div>
+                    <div *ngIf="ticket()!.comments.length === 0" class="empty-msg">Sin comentarios aún.</div>
+                </div>
+                <div class="comment-input" *ngIf="canEdit()">
+                    <textarea class="comment-textarea" [value]="commentText()"
+                        (input)="commentText.set($any($event.target).value)" placeholder="Escribe un comentario..."
+                        rows="2"></textarea>
+                    <button class="action-btn save-btn" [disabled]="!commentText().trim()" (click)="onAddComment()">📨 Comentar</button>
+                </div>
+            </div>
+
+            <!-- History -->
+            <div class="detail-card">
+                <h3>🕐 Historial de cambios</h3>
+                <div class="history-list">
+                    <div *ngFor="let h of ticket()!.history" class="history-item">
+                        <div class="history-dot"></div>
+                        <div class="history-body">
+                            <span class="history-user">{{ h.userName }}</span>
+                            cambió <strong>{{ h.field }}</strong>
+                            de <span class="history-val old">{{ h.oldValue }}</span>
+                            a <span class="history-val new">{{ h.newValue }}</span>
+                            <span class="history-date">{{ h.changedAt | date:'dd/MM/yyyy HH:mm' }}</span>
+                        </div>
+                    </div>
+                    <div *ngIf="ticket()!.history.length === 0" class="empty-msg">Sin historial de cambios.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar info -->
+        <div class="detail-sidebar">
+            <div class="info-card">
+                <div class="info-item">
+                    <span class="info-label">Estado</span>
+                    <span class="status-badge" [style.background]="statusLabels[ticket()!.status].color + '22'"
+                        [style.color]="statusLabels[ticket()!.status].color">
+                        {{ statusLabels[ticket()!.status].label }}
+                    </span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Prioridad</span>
+                    <span class="priority-badge" [style.background]="priorityLabels[ticket()!.priority].color + '22'"
+                        [style.color]="priorityLabels[ticket()!.priority].color">
+                        {{ priorityLabels[ticket()!.priority].label }}
+                    </span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Asignado a</span>
+                    <span class="info-value">{{ getAssigneeName(ticket()!.assignedTo) }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Creado por</span>
+                    <span class="info-value">{{ getCreatorName(ticket()!.createdBy) }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Fecha creación</span>
+                    <span class="info-value">{{ ticket()!.createdAt | date:'dd/MM/yyyy' }}</span>
+                </div>
+                <div class="info-item" *ngIf="ticket()!.dueDate">
+                    <span class="info-label">Fecha límite</span>
+                    <span class="info-value">{{ ticket()!.dueDate | date:'dd/MM/yyyy' }}</span>
+                </div>
+            </div>
+
+            <div class="permissions-info">
+                <p *ngIf="canFullEdit()" style="color:#3b82f6">🛡️ Puedes editar todo</p>
+                <p *ngIf="!canFullEdit() && isAssignee()" style="color:#f59e0b">ℹ️ Puedes cambiar estado y comentar</p>
+                <p *ngIf="!canEdit()" style="color:#64748b">🔒 Solo lectura</p>
+            </div>
+        </div>
+    </div>
+</div>

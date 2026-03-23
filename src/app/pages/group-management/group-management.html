@@ -1,0 +1,83 @@
+<p-toast></p-toast>
+<div class="gm-page">
+    <div class="gm-header">
+        <h1>⚙️ Gestión de Grupo</h1>
+        <p>Administra los miembros y configuración de {{ selectedGroup()?.nombre }}</p>
+    </div>
+
+    <!-- Group config -->
+    <div class="gm-card" *ngIf="canEdit()">
+        <div class="card-title-row">
+            <h3>Configuración del grupo</h3>
+            <div class="card-actions">
+                <button *ngIf="!editingName()" class="action-btn edit-btn" (click)="editingName.set(true)">
+                    ✏️ Editar
+                </button>
+                <button *ngIf="editingName()" class="action-btn save-btn" (click)="saveGroupName()">
+                    ✓ Guardar
+                </button>
+                <button *ngIf="editingName()" class="action-btn cancel-btn" (click)="editingName.set(false)">
+                    ✕ Cancelar
+                </button>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="field">
+                <label>Nombre del grupo</label>
+                <input pInputText [value]="groupName()"
+                    (input)="groupName.set($any($event.target).value)"
+                    [disabled]="!editingName()" />
+            </div>
+            <div class="field">
+                <label>Descripción</label>
+                <input pInputText [value]="groupDesc()"
+                    (input)="groupDesc.set($any($event.target).value)"
+                    [disabled]="!editingName()" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Members -->
+    <div class="gm-card">
+        <div class="card-title-row">
+            <h3>👥 Miembros del grupo ({{ members().length }})</h3>
+        </div>
+
+        <div class="add-member-row" *ngIf="canAdd()">
+            <input pInputText
+                [value]="newMemberEmail()"
+                (input)="newMemberEmail.set($any($event.target).value)"
+                placeholder="Email del nuevo miembro..."
+                class="email-input" />
+            <button class="action-btn save-btn" (click)="addMember()">
+                + Añadir
+            </button>
+        </div>
+
+        <div class="members-list">
+            <div *ngFor="let member of members()" class="member-row">
+                <div class="member-avatar">{{ member.nombreCompleto[0] }}</div>
+                <div class="member-info">
+                    <span class="member-name">{{ member.nombreCompleto }}</span>
+                    <span class="member-email">{{ member.email }}</span>
+                </div>
+                <div class="member-perms">
+                    <span *ngFor="let p of member.permissions.slice(0, 3)" class="perm-tag">{{ p }}</span>
+                    <span *ngIf="member.permissions.length > 3" class="perm-more">
+                        +{{ member.permissions.length - 3 }}
+                    </span>
+                    <span *ngIf="member.permissions.length === 0" class="perm-none">Sin permisos</span>
+                </div>
+                <button *ngIf="canDelete()" class="action-btn danger-btn" (click)="removeMember(member.id)"
+                    title="Eliminar del grupo">
+                    🗑️
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="no-access" *ngIf="!canEdit() && !canAdd() && !canDelete()">
+        <div style="font-size:2rem">🔒</div>
+        <p>No tienes permisos para administrar este grupo.</p>
+    </div>
+</div>

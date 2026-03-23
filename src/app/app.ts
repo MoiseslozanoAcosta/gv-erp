@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router'; 
+import { RouterOutlet, } from '@angular/router'; 
 import { ButtonModule } from 'primeng/button'; 
 
 @Component({
@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
   standalone: true,
   imports: [
     RouterOutlet, 
-    RouterLink,    
+    //RouterLink,    
     ButtonModule   
   ],
   templateUrl: './app.html', // Asegúrate que el archivo se llame app.html

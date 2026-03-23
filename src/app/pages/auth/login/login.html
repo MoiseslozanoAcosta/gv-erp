@@ -2,31 +2,74 @@
 
 <div class="auth-wrapper">
     <div class="auth-card">
-        <h2 style="margin-bottom: 2rem; color: #333; font-weight: 600;">Iniciar Sesión</h2>
+
+        <div class="auth-logo">
+            <div class="logo-icon">GV</div>
+            <div>
+                <h2>GV-ERP</h2>
+                <p>Sistema de gestión empresarial</p>
+            </div>
+        </div>
 
         <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-            <div style="margin-bottom: 1.5rem; text-align: left;">
-                <input pInputText formControlName="email" type="text" placeholder="Correo electrónico"
-                    [style]="{ 'width': '100%', 'padding': '0.75rem' }" />
+
+            <div class="field">
+                <label>Correo electrónico</label>
+                <div class="input-wrapper">
+                    <i class="pi pi-envelope input-icon"></i>
+                    <input pInputText formControlName="email" type="text" placeholder="correo@empresa.com" />
+                </div>
+                <small class="error" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.dirty">
+                    Ingresa un correo válido
+                </small>
             </div>
 
-            <div style="margin-bottom: 2rem; text-align: left;">
-                <input pInputText formControlName="password" type="password" placeholder="Contraseña"
-                    [style]="{ 'width': '100%', 'padding': '0.75rem' }" />
+            <div class="field">
+                <label>Contraseña</label>
+                <div class="input-wrapper">
+                    <i class="pi pi-lock input-icon"></i>
+                    <input pInputText formControlName="password"
+                        [type]="showPassword ? 'text' : 'password'"
+                        placeholder="Tu contraseña" />
+                    <button type="button" class="toggle-password" (click)="showPassword = !showPassword" tabindex="-1">
+                        <i class="pi" [class.pi-eye]="!showPassword" [class.pi-eye-slash]="showPassword"></i>
+                    </button>
+                </div>
             </div>
 
-            <div style="display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1.5rem;">
-                <p-button type="submit" label="Entrar" severity="success" icon="pi pi-sign-in"
-                    [style]="{ 'width': '100%' }">
-                </p-button>
-                <p-button label="Regresar" severity="danger" [text]="true" routerLink="/">
-                </p-button>
-            </div>
+            <p-button type="submit" label="Iniciar sesión" icon="pi pi-sign-in"
+                [style]="{'width': '100%', 'margin-top': '0.5rem'}"
+                [loading]="loading">
+            </p-button>
+
         </form>
 
-        <p style="color: #666; font-size: 0.9rem;">
-            ¿No tienes cuenta? <a routerLink="/register"
-                style="color: #007bff; text-decoration: none; font-weight: 500;">Regístrate</a>
-        </p>
+        <div class="auth-footer">
+            <span>¿No tienes cuenta?</span>
+            <a routerLink="/register">Regístrate aquí</a>
+        </div>
+
+        <div class="demo-accounts">
+            <p class="demo-title">Cuentas de prueba</p>
+            <div class="demo-grid">
+                <button type="button" class="demo-btn" (click)="fillDemo('superadmin@gverp.com', 'Super123#')">
+                    <span class="demo-role super">SuperAdmin</span>
+                    <span>superadmin@gverp.com</span>
+                </button>
+                <button type="button" class="demo-btn" (click)="fillDemo('admin@gmail.com', 'Admin123')">
+                    <span class="demo-role admin">Admin</span>
+                    <span>admin@gmail.com</span>
+                </button>
+                <button type="button" class="demo-btn" (click)="fillDemo('jorge@gmail.com', 'Admin123')">
+                    <span class="demo-role user">Usuario</span>
+                    <span>jorge@gmail.com</span>
+                </button>
+                <button type="button" class="demo-btn" (click)="fillDemo('ana@gmail.com', 'Admin123')">
+                    <span class="demo-role user">Usuario</span>
+                    <span>ana@gmail.com</span>
+                </button>
+            </div>
+        </div>
+
     </div>
 </div>

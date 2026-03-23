@@ -1,20 +1,67 @@
 <div class="sidebar">
-  <div class="logo">
-    <h2>GV-ERP</h2>
+  <div class="sidebar-brand">
+    <div class="brand-icon">GV</div>
+    <div class="brand-text">
+      <span class="brand-name">GV-ERP</span>
+      <span class="brand-version">v1.0.0</span>
+    </div>
   </div>
-  
-  <nav>
-    <a routerLink="/home" routerLinkActive="active"><i class="pi pi-home"></i> Dashboard</a>
-    <a routerLink="/group" routerLinkActive="active"><i class="pi pi-users"></i> Grupo</a>
-    <a routerLink="/user" routerLinkActive="active"><i class="pi pi-user"></i> Mi Perfil</a>
+
+  <div class="group-badge" *ngIf="selectedGroup()">
+    <i class="pi pi-users"></i>
+    <span>{{ selectedGroup()?.nombre }}</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <span class="nav-section">Principal</span>
+
+    <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">
+      <i class="pi pi-home"></i>
+      <span>Dashboard</span>
+    </a>
+
+    <span class="nav-section">Personal</span>
+    <a routerLink="/profile" routerLinkActive="active" class="nav-link">
+      <i class="pi pi-user"></i>
+      <span>Mi Perfil</span>
+    </a>
+
+    @if (canManageGroup() || isSuperAdmin()) {
+      <span class="nav-section">Administración</span>
+      
+      @if (canManageGroup()) {
+        <a routerLink="/group-management" routerLinkActive="active" class="nav-link">
+          <i class="pi pi-cog"></i>
+          <span>Gestión de Grupo</span>
+        </a>
+      }
+
+      @if (isSuperAdmin()) {
+        <a routerLink="/user-management" routerLinkActive="active" class="nav-link">
+          <i class="pi pi-shield"></i>
+          <span>Gestión de Usuarios</span>
+        </a>
+      }
+    }
   </nav>
 
   <div class="sidebar-footer">
-    <div class="logout">
-      <a routerLink="/login"><i class="pi pi-sign-out"></i> Salir</a>
+    <div class="user-info">
+      <div class="user-avatar">{{ userInitials() }}</div>
+      <div class="user-details">
+        <span class="user-name">{{ currentUser()?.nombreCompleto }}</span>
+        <span class="user-email">{{ currentUser()?.email }}</span>
+      </div>
     </div>
-      <div class="version-app">
-      <small>v. 1.0.0</small>
+    <div class="footer-actions">
+      <a routerLink="/groups" class="footer-btn switch-btn">
+        <i class="pi pi-refresh"></i>
+        <span>Cambiar grupo</span>
+      </a>
+      <button class="footer-btn logout-btn" (click)="logout()">
+        <i class="pi pi-sign-out"></i>
+        <span>Cerrar sesión</span>
+      </button>
     </div>
   </div>
 </div>

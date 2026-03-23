@@ -1,0 +1,70 @@
+<div class="groups-page">
+  <header class="groups-header">
+    <div class="header-left">
+      <div class="brand-logo">GV</div>
+      <div>
+        <h1>GV-ERP</h1>
+        <p>Selecciona un grupo de trabajo</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="llm-badge">
+        <i class="pi pi-microchip-ai"></i>
+        <span>{{ llmModel }}</span>
+      </div>
+      <div class="user-chip">
+        <div class="user-avatar">{{ currentUser()?.nombreCompleto?.[0] }}</div>
+        <span>{{ currentUser()?.nombreCompleto }}</span>
+      </div>
+      <button class="logout-btn" (click)="logout()">
+        <i class="pi pi-sign-out"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="groups-main">
+    <div class="groups-title">
+      <h2>Tus espacios de trabajo</h2>
+      <p>Elige el grupo al que deseas acceder</p>
+    </div>
+
+    <div class="groups-grid">
+      <div
+        *ngFor="let group of groups()"
+        class="group-card"
+        (click)="selectGroup(group)">
+        <div class="group-card-header">
+          <div class="group-icon">{{ group.nombre[0] }}</div>
+          <div class="group-info">
+            <h3>{{ group.nombre }}</h3>
+            <p>{{ group.descripcion }}</p>
+          </div>
+          <i class="pi pi-arrow-right group-arrow"></i>
+        </div>
+        <div class="group-stats">
+          <div class="stat">
+            <span class="stat-value">{{ getGroupStats(group.id).total }}</span>
+            <span class="stat-label">Tickets</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" style="color:#3b82f6">{{ getGroupStats(group.id)['en-progreso'] }}</span>
+            <span class="stat-label">En progreso</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" style="color:#10b981">{{ getGroupStats(group.id).hecho }}</span>
+            <span class="stat-label">Completados</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" style="color:#94a3b8">{{ getMemberCount(group) }}</span>
+            <span class="stat-label">Miembros</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="groups().length === 0" class="empty-groups">
+      <i class="pi pi-inbox"></i>
+      <p>No perteneces a ningún grupo aún.</p>
+    </div>
+  </main>
+</div>

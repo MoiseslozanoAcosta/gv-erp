@@ -1,0 +1,101 @@
+<p-toast></p-toast>
+<div class="profile-page">
+    <div class="profile-header">
+        <div class="avatar-large">{{ userInitials() }}</div>
+        <div class="profile-info">
+            <h1>{{ currentUser()?.nombreCompleto }}</h1>
+            <p>{{ currentUser()?.email }}</p>
+            <div class="groups-chips">
+                <span *ngFor="let g of userGroups()" class="group-chip">{{ g.nombre }}</span>
+            </div>
+        </div>
+        <div class="profile-actions">
+            <p-button *ngIf="!isEditing" label="Editar perfil" icon="pi pi-pencil" size="small" severity="secondary"
+                (onClick)="toggleEdit()"></p-button>
+            <p-button *ngIf="isEditing" label="Guardar" icon="pi pi-check" size="small" (onClick)="onSave()"></p-button>
+            <p-button *ngIf="isEditing" label="Cancelar" size="small" severity="secondary" [text]="true"
+                (onClick)="toggleEdit()"></p-button>
+        </div>
+    </div>
+
+    <!-- Summary cards -->
+    <div class="summary-row">
+        <div class="summary-card">
+            <span class="summary-val">{{ ticketSummary().total }}</span>
+            <span class="summary-label">Total asignados</span>
+        </div>
+        <div class="summary-card">
+            <span class="summary-val" style="color:#6b7280">{{ ticketSummary().open }}</span>
+            <span class="summary-label">Pendientes</span>
+        </div>
+        <div class="summary-card">
+            <span class="summary-val" style="color:#3b82f6">{{ ticketSummary().inProgress }}</span>
+            <span class="summary-label">En progreso</span>
+        </div>
+        <div class="summary-card">
+            <span class="summary-val" style="color:#10b981">{{ ticketSummary().done }}</span>
+            <span class="summary-label">Completados</span>
+        </div>
+    </div>
+
+    <div class="profile-grid">
+        <!-- Form -->
+        <div class="profile-card">
+            <h3>Datos personales</h3>
+            <form [formGroup]="form">
+                <div class="form-row">
+                    <div class="field">
+                        <label>Nombre completo</label>
+                        <input pInputText formControlName="nombreCompleto" />
+                    </div>
+                    <div class="field">
+                        <label>Usuario</label>
+                        <input pInputText formControlName="username" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Email</label>
+                        <input pInputText formControlName="email" type="email" />
+                    </div>
+                    <div class="field">
+                        <label>Teléfono</label>
+                        <input pInputText formControlName="telefono" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Dirección</label>
+                        <input pInputText formControlName="direccion" />
+                    </div>
+                    <div class="field">
+                        <label>Fecha de nacimiento</label>
+                        <input pInputText type="date" formControlName="fechaNacimiento" />
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- My tickets -->
+        <div class="profile-card">
+            <h3><i class="pi pi-ticket"></i> Mis Tickets Asignados</h3>
+            <div class="ticket-mini-list">
+                <a *ngFor="let t of myTickets()" [routerLink]="['/tickets', t.id]" class="ticket-mini">
+                    <span class="ticket-mini-id">#{{ t.id }}</span>
+                    <span class="ticket-mini-title">{{ t.title }}</span>
+                    <span class="status-dot" [style.background]="statusLabels[t.status].color"
+                        [title]="statusLabels[t.status].label"></span>
+                </a>
+                <p *ngIf="myTickets().length === 0" class="empty-msg">No tienes tickets asignados.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Permissions -->
+    <div class="profile-card permissions-card">
+        <h3><i class="pi pi-shield"></i> Mis permisos</h3>
+        <div class="permissions-list">
+            <span *ngFor="let p of currentUser()?.permissions" class="permission-tag">{{ p }}</span>
+        </div>
+    </div>
+</div>

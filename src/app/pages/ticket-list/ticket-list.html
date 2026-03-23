@@ -1,0 +1,89 @@
+<div class="list-page">
+    @if (auth.hasPermission('ticket:view') || auth.isSuperAdmin()) {
+        <div class="list-header">
+            <div>
+                <h1>Lista de Tickets</h1>
+                <p>{{ tickets().length }} tickets — {{ selectedGroup()?.nombre }}</p>
+            </div>
+        </div>
+
+        <div class="quick-filters">
+            <button class="filter-btn" [class.active]="filterMine()" (click)="toggleFilterMine()">
+                👤 Mis tickets
+            </button>
+            <button class="filter-btn" [class.active]="filterUnassigned()" (click)="toggleFilterUnassigned()">
+                ➖ Sin asignar
+            </button>
+            <button class="filter-btn high" [class.active]="filterHighPriority()" (click)="toggleFilterHighPriority()">
+                ⚠️ Prioridad alta
+            </button>
+            <button class="filter-btn clear" (click)="clearFilters()">
+                🧹 Limpiar
+            </button>
+        </div>
+
+        <div class="filters-row">
+            <input pInputText class="search-input" [value]="searchText()"
+                (input)="searchText.set($any($event.target).value)" placeholder="Buscar por título o ID..." />
+            
+            <p-select [options]="statusOptions" [ngModel]="filterStatus()" 
+                (ngModelChange)="filterStatus.set($event)" optionLabel="label" 
+                optionValue="value" styleClass="filter-select"></p-select>
+
+            <p-select [options]="priorityOptions" [ngModel]="filterPriority()" 
+                (ngModelChange)="filterPriority.set($event)" optionLabel="label" 
+                optionValue="value" styleClass="filter-select"></p-select>
+
+            <p-select [options]="memberOptions()" [ngModel]="filterAssigned()" 
+                (ngModelChange)="filterAssigned.set($event)" optionLabel="label" 
+                optionValue="value" styleClass="filter-select"></p-select>
+        </div>
+
+        <div class="tickets-table">
+            <div class="table-head">
+                <div class="col-id">ID</div>
+                <div class="col-title">Título</div>
+                <div class="col-status">Estado</div>
+                <div class="col-assignee">Asignado a</div>
+                <div class="col-priority">Prioridad</div>
+                <div class="col-due">Fecha límite</div>
+            </div>
+
+            @for (ticket of tickets(); track ticket.id) {
+                <a [routerLink]="['/tickets', ticket.id]" class="table-row">
+                    <div class="col-id">#{{ ticket.id }}</div>
+                    <div class="col-title">
+                        <span class="ticket-title">{{ ticket.title }}</span>
+                        <span *ngIf="ticket.comments.length > 0" class="comment-badge">💬 {{ ticket.comments.length }}</span>
+                    </div>
+                    <div class="col-status">
+                        <span class="status-badge" [style.background]="statusLabels[ticket.status].color + '22'"
+                            [style.color]="statusLabels[ticket.status].color">
+                            {{ statusLabels[ticket.status].label }}
+                        </span>
+                    </div>
+                    <div class="col-assignee">{{ getAssigneeName(ticket.assignedTo) }}</div>
+                    <div class="col-priority">
+                        <span class="priority-tag" [style.background]="priorityLabels[ticket.priority].color + '22'"
+                            [style.color]="priorityLabels[ticket.priority].color">
+                            {{ priorityLabels[ticket.priority].label }}
+                        </span>
+                    </div>
+                    <div class="col-due">{{ ticket.dueDate ? (ticket.dueDate | date:'dd/MM/yyyy') : '—' }}</div>
+                </a>
+            }
+
+            @if (tickets().length === 0) {
+                <div class="empty-table">
+                    📭 <p>No se encontraron tickets</p>
+                </div>
+            }
+        </div>
+    } @else {
+        <div class="no-access-container">
+            <i class="pi pi-lock"></i>
+            <h2>Acceso Restringido</h2>
+            <p>No tienes permisos para visualizar los tickets de este grupo.</p>
+        </div>
+    }
+</div>

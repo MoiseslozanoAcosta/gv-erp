@@ -1,0 +1,31 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <div class="header-info">
+      <h1>Panel de Control</h1>
+      <p class="subtitle">{{ selectedGroup()?.nombre }}</p>
+    </div>
+
+    <div class="header-actions">
+      <div class="view-selector">
+        <a routerLink="/dashboard" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" class="tab-btn">
+          <i class="pi pi-list"></i> Lista
+        </a>
+        <a routerLink="/dashboard/kanban" routerLinkActive="active" class="tab-btn">
+          <i class="pi pi-table"></i> Kanban
+        </a>
+      </div>
+
+      @if (canCreate()) {
+        <button pButton label="Nuevo Ticket" icon="pi pi-plus" 
+                routerLink="/tickets/new" class="p-button-primary">
+        </button>
+      }
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="dashboard-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,21 +1,53 @@
-@import "primeicons/primeicons.css";
+/* Reset & Base */
+*, *::before, *::after { box-sizing: border-box; }
 
-/* Estilos para contenedores de autenticación */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0f172a;
+  color: #f1f5f9;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Auth wrapper shared style */
 .auth-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 80vh;
-    background: #f8f9fa;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0f172a;
+}
+.auth-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
 }
 
-.auth-card {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    border: 1px solid #eee;
-}
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+/* PrimeNG overrides for dark theme */
+.p-toast .p-toast-message { background: #1e293b !important; border: 1px solid #334155 !important; color: #f1f5f9 !important; }
+.p-toast .p-toast-message .p-toast-message-content .p-toast-detail { color: #94a3b8 !important; }
+
+.p-dialog { background: #1e293b !important; border: 1px solid #334155 !important; }
+.p-dialog .p-dialog-header { background: #1e293b !important; border-bottom: 1px solid #334155 !important; }
+.p-dialog .p-dialog-header .p-dialog-title { color: #f1f5f9 !important; }
+.p-dialog .p-dialog-content { background: #1e293b !important; }
+.p-dialog .p-dialog-footer { background: #1e293b !important; border-top: 1px solid #334155 !important; }
+
+.p-overlay-mask { background: rgba(0,0,0,0.7) !important; }
+
+.p-select-overlay { background: #1e293b !important; border: 1px solid #334155 !important; }
+.p-select-option { color: #f1f5f9 !important; }
+.p-select-option:hover { background: #334155 !important; }
+.p-select-option.p-select-option-selected { background: #1e40af20 !important; color: #60a5fa !important; }

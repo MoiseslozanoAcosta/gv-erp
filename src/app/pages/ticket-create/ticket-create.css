@@ -1,0 +1,103 @@
+.create-page {
+    padding: 1.5rem 2rem;
+    max-width: 700px;
+}
+
+.create-header {
+    margin-bottom: 1.5rem;
+}
+
+.create-header h1 {
+    color: #f1f5f9;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.create-header h1 i {
+    color: #3b82f6;
+}
+
+.create-header p {
+    color: #64748b;
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+.create-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 14px;
+    padding: 2rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+}
+
+.field label {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.required {
+    color: #ef4444;
+}
+
+.field input,
+.field textarea {
+    background: #0f172a !important;
+    border: 1px solid #334155 !important;
+    color: #f1f5f9 !important;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.field input:focus,
+.field textarea:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+    outline: none;
+}
+
+.field textarea {
+    resize: vertical;
+}
+
+.error {
+    color: #ef4444;
+    font-size: 0.75rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+:host ::ng-deep .p-select {
+    background: #0f172a !important;
+    border: 1px solid #334155 !important;
+    border-radius: 8px;
+}
+
+:host ::ng-deep .p-select .p-select-label {
+    color: #f1f5f9 !important;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid #334155;
+}

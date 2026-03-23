@@ -1,0 +1,115 @@
+<p-toast></p-toast>
+
+<div class="um-page" *ngIf="isSuperAdmin(); else noAccess">
+    <div class="um-header">
+        <div>
+            <h1>🛡 Gestión de Usuarios</h1>
+            <p>Control total de usuarios y permisos del sistema — SuperAdmin</p>
+        </div>
+        <button class="btn-new" (click)="openCreate()">+ Nuevo Usuario</button>
+    </div>
+
+    <div class="um-table">
+        <div class="table-head">
+            <div>Usuario</div>
+            <div>Email</div>
+            <div>Grupos</div>
+            <div>Permisos</div>
+            <div>Acciones</div>
+        </div>
+
+        <div *ngFor="let user of users()" class="table-row">
+            <div class="user-cell">
+                <div class="user-avatar">{{ user.nombreCompleto[0] }}</div>
+                <div>
+                    <span class="user-name">{{ user.nombreCompleto }}</span>
+                    <span class="user-username">@{{ user.username }}</span>
+                </div>
+            </div>
+            <div class="email-cell">{{ user.email }}</div>
+            <div class="groups-cell">
+                <span class="group-count">{{ user.groupIds.length }} grupos</span>
+            </div>
+            <div class="perms-cell">
+                <span *ngIf="user.permissions.includes('superAdmin')" class="super-badge">SuperAdmin</span>
+                <ng-container *ngIf="!user.permissions.includes('superAdmin')">
+                    <span *ngFor="let p of user.permissions.slice(0, 2)" class="perm-tag">{{ p }}</span>
+                    <span *ngIf="user.permissions.length > 2" class="perm-more">+{{ user.permissions.length - 2 }}</span>
+                    <span *ngIf="user.permissions.length === 0" class="perm-none">Sin permisos</span>
+                </ng-container>
+            </div>
+            <div class="actions-cell">
+                <button class="action-btn edit-btn" (click)="openEdit(user)" title="Editar usuario">✏️</button>
+                <button class="action-btn delete-btn" (click)="deleteUser(user)" title="Eliminar usuario"
+                    [disabled]="user.permissions.includes('superAdmin')">🗑️</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #noAccess>
+    <div class="no-access">
+        <div style="font-size:3rem">🔒</div>
+        <h2>Acceso Restringido</h2>
+        <p>Esta sección es exclusiva para el SuperAdmin.</p>
+    </div>
+</ng-template>
+
+<p-dialog [(visible)]="showDialog"
+    [header]="editingUser() ? 'Editar Usuario: ' + (editingUser()?.nombreCompleto ?? '') : 'Crear Nuevo Usuario'"
+    [modal]="true" [style]="{width: '620px'}" [draggable]="false" [closable]="true">
+
+    <form [formGroup]="userForm">
+        <div class="form-row">
+            <div class="field">
+                <label>Nombre completo *</label>
+                <input pInputText formControlName="nombreCompleto" placeholder="Nombre y apellido" />
+            </div>
+            <div class="field">
+                <label>Usuario *</label>
+                <input pInputText formControlName="username" placeholder="nombre_usuario" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="field">
+                <label>Email *</label>
+                <input pInputText formControlName="email" type="email" placeholder="correo@ejemplo.com" />
+            </div>
+            <div class="field">
+                <label>Teléfono</label>
+                <input pInputText formControlName="telefono" placeholder="10 dígitos" maxlength="10" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="field">
+                <label>Dirección</label>
+                <input pInputText formControlName="direccion" placeholder="Ciudad, País" />
+            </div>
+            <div class="field">
+                <label>Fecha nacimiento</label>
+                <input pInputText type="date" formControlName="fechaNacimiento" />
+            </div>
+        </div>
+
+        <div class="perms-section">
+            <div class="perms-label">
+                🛡 Permisos
+                <span class="perms-count">{{ selectedPermissions().length }} seleccionados</span>
+            </div>
+            <div class="perms-grid">
+                <button *ngFor="let perm of allPermissions" type="button"
+                    class="perm-toggle" [class.active]="hasPerm(perm)"
+                    (click)="togglePermission(perm)">
+                    {{ hasPerm(perm) ? '✅' : '⬜' }} {{ perm }}
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+        <div class="dialog-footer">
+            <button class="btn-cancel" (click)="showDialog.set(false)">✕ Cancelar</button>
+            <button class="btn-save" [disabled]="userForm.invalid" (click)="onSave()">✓ Guardar</button>
+        </div>
+    </ng-template>
+</p-dialog>

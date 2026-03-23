@@ -1,0 +1,276 @@
+/* PAGE */
+.groups-page {
+    min-height: 100vh;
+    background: #0f172a;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HEADER */
+.groups-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 32px;
+    background: #0f172a;
+    border-bottom: 1px solid #1e293b;
+}
+
+/* HEADER LEFT */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.brand-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    font-size: 18px;
+}
+
+.header-left h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #f1f5f9;
+}
+
+.header-left p {
+    margin: 0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* HEADER RIGHT */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+/* LLM BADGE */
+.llm-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #3b82f6;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* USER CHIP */
+.user-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+.user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: white;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+}
+
+/* LOGOUT */
+.logout-btn {
+    border: 1px solid #334155;
+    background: #1e293b;
+    cursor: pointer;
+    font-size: 16px;
+    color: #64748b;
+    transition: all 0.15s;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout-btn:hover {
+    color: #ef4444;
+    border-color: #ef4444;
+    background: #450a0a;
+}
+
+/* MAIN */
+.groups-main {
+    flex: 1;
+    padding: 40px;
+}
+
+/* TITLE */
+.groups-title h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    color: #f1f5f9;
+}
+
+.groups-title p {
+    margin-top: 6px;
+    color: #64748b;
+}
+
+/* GRID */
+.groups-grid {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+/* GROUP CARD */
+.group-card {
+    background: #1e293b;
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid #334155;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.group-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border-color: #3b82f6;
+}
+
+/* CARD HEADER */
+.group-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.group-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.group-info {
+    flex: 1;
+}
+
+.group-info h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #f1f5f9;
+}
+
+.group-info p {
+    margin: 2px 0 0 0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.group-arrow {
+    color: #334155;
+    transition: color 0.15s;
+}
+
+.group-card:hover .group-arrow {
+    color: #3b82f6;
+}
+
+/* STATS */
+.group-stats {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid #334155;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-value {
+    font-weight: 700;
+    font-size: 18px;
+    display: block;
+    color: #f1f5f9;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #475569;
+    margin-top: 2px;
+    display: block;
+}
+
+/* EMPTY STATE */
+.empty-groups {
+    margin-top: 60px;
+    text-align: center;
+    color: #334155;
+}
+
+.empty-groups i {
+    font-size: 42px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.empty-groups p {
+    color: #475569;
+    margin: 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .groups-header {
+        padding: 16px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .groups-main {
+        padding: 20px;
+    }
+
+    .groups-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .llm-badge span {
+        display: none;
+    }
+}

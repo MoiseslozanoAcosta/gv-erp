@@ -1,0 +1,89 @@
+<div class="kanban-page">
+    @if (auth.hasPermission('ticket:view') || auth.isSuperAdmin()) {
+        <div class="kanban-header">
+            <div>
+                <h1>Tablero Kanban</h1>
+                <p>{{ selectedGroup()?.nombre }}</p>
+            </div>
+            <div class="header-right">
+                <div class="llm-badge"><i class="pi pi-microchip-ai"></i><span>{{ llmModel }}</span></div>
+                <!--<a routerLink="/tickets/new">
+                    <p-button label="Crear Ticket" icon="pi pi-plus" size="small"></p-button>
+                </a>-->
+            </div>
+        </div>
+
+        <div class="quick-filters">
+            <button class="filter-btn" [class.active]="filterMine()" (click)="toggleFilterMine()">
+                <i class="pi pi-user"></i> Mis tickets
+            </button>
+            <button class="filter-btn" [class.active]="filterUnassigned()" (click)="toggleFilterUnassigned()">
+                <i class="pi pi-minus-circle"></i> Sin asignar
+            </button>
+            <button class="filter-btn high" [class.active]="filterHighPriority()" (click)="toggleFilterHighPriority()">
+                <i class="pi pi-exclamation-triangle"></i> Prioridad alta
+            </button>
+        </div>
+
+        <div class="kanban-board">
+            <div *ngFor="let status of columns" class="kanban-column" (dragover)="onDragOver($event)"
+                (drop)="onDrop($event, status)">
+
+                <div class="column-header" [style.borderTopColor]="statusLabels[status].color">
+                    <div class="column-title">
+                        <span class="column-dot" [style.background]="statusLabels[status].color"></span>
+                        <span>{{ statusLabels[status].label }}</span>
+                    </div>
+                    <span class="column-count" [style.background]="statusLabels[status].color + '33'"
+                        [style.color]="statusLabels[status].color">
+                        {{ getColumnTickets(status).length }}
+                    </span>
+                </div>
+
+                <div class="column-body">
+                    <a *ngFor="let ticket of getColumnTickets(status)" [routerLink]="['/tickets', ticket.id]"
+                        class="ticket-card" [class.overdue]="isOverdue(ticket)" draggable="true"
+                        (dragstart)="onDragStart(ticket)">
+
+                        <div class="card-header">
+                            <span class="card-id">#{{ ticket.id }}</span>
+                            <span class="priority-tag" [style.background]="priorityLabels[ticket.priority].color + '22'"
+                                [style.color]="priorityLabels[ticket.priority].color">
+                                {{ ticket.priority }}
+                            </span>
+                        </div>
+
+                        <p class="card-title">{{ ticket.title }}</p>
+
+                        <div class="card-footer">
+                            <div class="assignee-chip">
+                                <div class="assignee-avatar">{{ getAssigneeName(ticket.assignedTo)[0] || '?' }}</div>
+                                <span>{{ getAssigneeName(ticket.assignedTo) }}</span>
+                            </div>
+                            <div class="card-meta">
+                                <span *ngIf="ticket.dueDate" class="due-date" [class.overdue-text]="isOverdue(ticket)">
+                                    <i class="pi pi-calendar"></i>
+                                    {{ ticket.dueDate | date:'dd/MM' }}
+                                </span>
+                                <span *ngIf="ticket.comments.length > 0" class="comment-count">
+                                    <i class="pi pi-comment"></i> {{ ticket.comments.length }}
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div *ngIf="getColumnTickets(status).length === 0" class="empty-column">
+                        <i class="pi pi-inbox"></i>
+                        <span>Sin tickets</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    } @else {
+        <div class="no-access-container">
+            <i class="pi pi-lock"></i>
+            <h2>Acceso Restringido</h2>
+            <p>No tienes permisos suficientes para visualizar el Tablero Kanban.</p>
+        </div>
+    }
+</div>
